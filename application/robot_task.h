@@ -7,63 +7,30 @@
 #include "cmsis_os.h"
 
 #include "daemon.h"
-#include "user_lib.h"
-
-#include "bsp_log.h"
-#include "ins_task.h"
-
 #include "robot_cmd.h"
-#include "gimbal.h"
 #include "chassis.h"
-#include "shoot.h"
 #include "motor_task.h"
 
 //! 任务直接在cubeMX中配置,不再使用这种方式
-__attribute__((noreturn)) void StartINSTASK(void *argument)
-{
-    UNUSED(argument);
-    static uint32_t ins_time;
-    static float ins_dt;
-    LOGINFO("[freeRTOS] INS Task Start");
-    while (1) {
-        INS_Task();
-        ins_dt = 1000 * DWT_GetDeltaT(&ins_time);
-        if (ins_dt > 1.2f)
-            LOGERROR("[freeRTOS] INS Task is being DELAY! dt = [%f]ms", &ins_dt);
-        osDelay(1);
-    }
-}
-
 __attribute__((noreturn)) void _RobotCMDTask(void *argument)
 {
-    static uint32_t cmd_time;
-    static float cmd_dt;
-    LOGINFO("[freeRTOS] RobotCMD Task Start");
+    UNUSED(argument);
     for (;;) {
         RobotCMDTask();
-        ShootTask();
-        cmd_dt = 1000 * DWT_GetDeltaT(&cmd_time);
-        if (cmd_dt > 1.2f)
-            LOGERROR("[freeRTOS] Robot Task is being DELAY! dt = [%f]ms", &cmd_dt);
         osDelay(1);
     }
 }
 __attribute__((noreturn)) void _ChassisTask(void *argument)
 {
+    UNUSED(argument);
     for (;;) {
         ChassisTask();
         osDelay(1);
     }
 }
-__attribute__((noreturn)) void _GimbalTask(void *argument)
-{
-    for (;;) {
-        GimbalTask();
-        osDelay(1);
-    }
-}
 __attribute__((noreturn)) void motorControlTask(void *argument)
 {
+    UNUSED(argument);
     for (;;) {
         MotorControlTask();
         osDelay(1);
@@ -72,6 +39,7 @@ __attribute__((noreturn)) void motorControlTask(void *argument)
 
 __attribute__((noreturn)) void _DaemonTask(void *argument)
 {
+    UNUSED(argument);
     for (;;) {
         DaemonTask();
         osDelay(1);

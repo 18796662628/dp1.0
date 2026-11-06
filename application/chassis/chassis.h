@@ -1,16 +1,23 @@
 #ifndef CHASSIS_H
 #define CHASSIS_H
 
-/**
- * @brief 底盘应用初始化,请在开启rtos之前调用(目前会被RobotInit()调用)
- * 
- */
-void ChassisInit();
+#include "robot_def.h"
 
-/**
- * @brief 底盘应用任务,放入实时系统以一定频率运行
- * 
- */
-void ChassisTask();
+typedef struct {
+    float command_vx_m_s;
+    float command_vy_m_s;
+    float command_wz_rad_s;
+    uint8_t command_enabled;
+    float front_left_steer_target_deg;
+    float rear_right_steer_target_deg;
+    float front_left_drive_target_aps;
+    float rear_right_drive_target_aps;
+    uint8_t motors_online;
+} SemiSteer_Chassis_Debug_s;
 
-#endif // CHASSIS_H
+extern volatile SemiSteer_Chassis_Debug_s semi_steer_chassis_debug;
+
+void ChassisInit(void);
+void ChassisTask(void);
+
+#endif

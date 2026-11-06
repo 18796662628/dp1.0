@@ -19,7 +19,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # 指定工程名称和语言类型
-project(basic_framework C ASM)
+project(semi_steer_chassis C ASM)
 
 # 选择构建类型
 set(CMAKE_BUILD_TYPE Debug) # Debug Release RelWithDebInfo MinSizeRel
@@ -74,14 +74,31 @@ include_sub_directories_recursively(${CMAKE_SOURCE_DIR}/application)
 include_sub_directories_recursively(${CMAKE_SOURCE_DIR}/Inc)
 
 # add source, only surfix .c
-file(GLOB_RECURSE SOURCES
+file(GLOB_RECURSE PLATFORM_SOURCES
     "Drivers/*.c"
     "Src/*.c"
     "Middlewares/*.c"
     "bsp/*.c"
-    "modules/*.c"
-    "application/*.c"
 )
+
+# Keep the chassis application small and explicit.  The repository still keeps
+# other module implementations for reference, but they are not linked into
+# this firmware image.
+file(GLOB_RECURSE ALGORITHM_SOURCES "modules/algorithm/*.c")
+set(MODULE_SOURCES
+    modules/message_center/message_center.c
+    modules/daemon/daemon.c
+    modules/remote/remote_control.c
+    modules/motor/motor_task.c
+    modules/motor/DJImotor/dji_motor.c
+    ${ALGORITHM_SOURCES}
+)
+set(APPLICATION_SOURCES
+    application/robot.c
+    application/cmd/robot_cmd.c
+    application/chassis/chassis.c
+)
+set(SOURCES ${PLATFORM_SOURCES} ${MODULE_SOURCES} ${APPLICATION_SOURCES})
 
 # 汇编文件路径
 # ENABLE_LANGUAGE(ASM)

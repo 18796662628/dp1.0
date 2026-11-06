@@ -44,33 +44,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-osThreadId_t BuzzerHandle;
-const osThreadAttr_t buzzerTask_attributes = {
-  .name = "buzzerTask",
-  .stack_size = 64 * 4,
-  .priority = (osPriority_t) osPriorityNormal,
-};
 /* USER CODE END Variables */
-/* Definitions for instask */
-osThreadId_t instaskHandle;
-const osThreadAttr_t instask_attributes = {
-  .name = "instask",
-  .stack_size = 1024 * 4,
-  .priority = (osPriority_t) osPriorityRealtime7,
-};
 /* Definitions for CMD */
 osThreadId_t CMDHandle;
 const osThreadAttr_t CMD_attributes = {
   .name = "CMD",
   .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityHigh7,
-};
-/* Definitions for Gimbal */
-osThreadId_t GimbalHandle;
-const osThreadAttr_t Gimbal_attributes = {
-  .name = "Gimbal",
-  .stack_size = 128 * 4,
-  .priority = (osPriority_t) osPriorityHigh,
 };
 /* Definitions for Chassis */
 osThreadId_t ChassisHandle;
@@ -96,12 +76,9 @@ const osThreadAttr_t Daemon_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-void BuzzerTask(void *argument);
 /* USER CODE END FunctionPrototypes */
 
-void StartINSTASK(void *argument);
 void _RobotCMDTask(void *argument);
-void _GimbalTask(void *argument);
 void _ChassisTask(void *argument);
 void motorControlTask(void *argument);
 void _DaemonTask(void *argument);
@@ -136,39 +113,18 @@ void MX_FREERTOS_Init(void) {
   /* Create the thread(s) */
   CMDHandle = osThreadNew(_RobotCMDTask, NULL, &CMD_attributes);
   motorControlHandle = osThreadNew(motorControlTask, NULL, &motorControl_attributes);
-  GimbalHandle = osThreadNew(_GimbalTask, NULL, &Gimbal_attributes);
-  instaskHandle = osThreadNew(StartINSTASK, NULL, &instask_attributes);
   DaemonHandle = osThreadNew(_DaemonTask, NULL, &Daemon_attributes);
   ChassisHandle = osThreadNew(_ChassisTask, NULL, &Chassis_attributes);
 
 
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
-  BuzzerHandle = osThreadNew(BuzzerTask, NULL, &buzzerTask_attributes);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
     /* add events, ... */
   /* USER CODE END RTOS_EVENTS */
 
-}
-
-/* USER CODE BEGIN Header_StartINSTASK */
-/**
-* @brief Function implementing the instask thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header_StartINSTASK */
-__weak void StartINSTASK(void *argument)
-{
-  /* USER CODE BEGIN StartINSTASK */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END StartINSTASK */
 }
 
 /* USER CODE BEGIN Header__RobotCMDTask */
@@ -187,24 +143,6 @@ __weak void _RobotCMDTask(void *argument)
     osDelay(1);
   }
   /* USER CODE END _RobotCMDTask */
-}
-
-/* USER CODE BEGIN Header__GimbalTask */
-/**
-* @brief Function implementing the Gimbal thread.
-* @param argument: Not used
-* @retval None
-*/
-/* USER CODE END Header__GimbalTask */
-__weak void _GimbalTask(void *argument)
-{
-  /* USER CODE BEGIN _GimbalTask */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END _GimbalTask */
 }
 
 /* USER CODE BEGIN Header__ChassisTask */

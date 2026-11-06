@@ -4,7 +4,6 @@
 #include "stdlib.h"
 #include "bsp_dwt.h"
 #include "bsp_log.h"
-#include "super_cap.h"
 #include "robot_def.h"
 /* can instance ptrs storage, used for recv callback */
 // 在CAN产生接收中断会遍历数组,选出hcan和rxid与发生中断的实例相同的那个,调用其回调函数

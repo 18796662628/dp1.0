@@ -10,12 +10,9 @@
  */
 #include "bsp_init.h"
 #include "robot.h"
-#include "robot_def.h"
 #include "robot_task.h"
 #include "chassis.h"
-#include "gimbal.h"
 #include "robot_cmd.h"
-#include "shoot.h"
 
 void RobotInit()
 {
@@ -23,17 +20,7 @@ void RobotInit()
 
     BSPInit();
     RobotCMDInit();
-    GimbalInit();
     ChassisInit();
-    ShootInit();
 
     __enable_irq();
-}
-
-void RobotTask()
-{
-    RobotCMDTask();
-    GimbalTask();
-    ChassisTask();
-    ShootTask();
 }

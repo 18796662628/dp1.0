@@ -1,5 +1,5 @@
 version: "4.1"
-name: basic_framework
+name: semi_steer_chassis
 type: ARM
 deviceName: STM32F407IGHx
 packDir: .pack/Keil/STM32F4xx_DFP.2.14.0
@@ -107,6 +107,35 @@ targets:
     excludeList:
       - modules/BMI088/bmi088.c
       - modules/wit_imu
+      - modules/BMI088
+      - modules/can_comm
+      - modules/encoder
+      - modules/externcmd
+      - modules/imu
+      - modules/ist8310
+      - modules/led
+      - modules/master_machine
+      - modules/oled
+      - modules/referee
+      - modules/RS485
+      - modules/standard_cmd
+      - modules/super_cap
+      - modules/TFminiPlus
+      - modules/tool
+      - modules/unicomm
+      - modules/vofa
+      - modules/watttmeter
+      - modules/motor/DMmotor
+      - modules/motor/DRmotor
+      - modules/motor/HTmotor
+      - modules/motor/LKmotor
+      - modules/motor/servo_motor
+      - modules/motor/step_motor
+      - modules/motor/YSmotor
+      - application/gimbal
+      - application/shoot
+      - application/UI
+      - application/test
     settings:
       debugger: cortex-debug
     toolchain: GCC

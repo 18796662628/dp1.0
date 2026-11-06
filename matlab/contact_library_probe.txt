@@ -1,0 +1,51 @@
+start
+library loaded
+block path:
+sm_lib/Forces and
+Torques/Planar
+Contact Force
+
+port connectivity:
+port 1: type=LConn1
+port 2: type=RConn1
+
+dialog parameters:
+NormalForceType
+NormalStiffness
+NormalStiffness_conf
+NormalStiffnessUnits
+NormalDamping
+NormalDamping_conf
+NormalDampingUnits
+NormalTransitionRegionWidth
+NormalTransitionRegionWidth_conf
+NormalTransitionRegionWidthUnits
+FrictionType
+CoefficientOfStaticFriction
+CoefficientOfStaticFriction_conf
+CoefficientOfDynamicFriction
+CoefficientOfDynamicFriction_conf
+FrictionalCriticalVelocity
+FrictionalCriticalVelocity_conf
+FrictionalCriticalVelocityUnits
+SenseContactSignal
+SensePenetrationDepth
+SenseNormalVelocity
+SenseTangentialVelocity
+SensingForceTorqueDirection
+SensingForceTorqueResolutionFrame
+SenseNormalForce
+SenseNormalForceMagnitude
+SenseNormalTorque
+SenseFrictionalForce
+SenseFrictionalForceMagnitude
+SenseFrictionalTorque
+SenseTotalForce
+SenseTotalTorque
+SenseContactBaseRotation
+SenseContactBaseTranslation
+SenseContactFollowerRotation
+SenseContactFollowerTranslation
+ZeroCrossDetectContactStartAndEnd
+BlockFunction
+probe complete
